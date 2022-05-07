@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -40,7 +41,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    public void initialize() {
+    public void initialize() throws SQLException, ClassNotFoundException {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblCustomers.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         tblCustomers.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -67,20 +68,14 @@ public class ManageCustomersFormController {
         loadAllCustomers();
     }
 
-    private void loadAllCustomers() {
+    public void loadAllCustomers() throws SQLException, ClassNotFoundException {
         tblCustomers.getItems().clear();
         /*Get all customers*/
-        try {
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-            ArrayList<CustomerDTO> allCustomers = customerDAO.getAllCustomers();
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        ArrayList<CustomerDTO> allCustomers = customerDAO.getAllCustomers();
 
-            for (CustomerDTO customer : allCustomers) {
-                tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        for (CustomerDTO customer : allCustomers) {
+            tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
         }
     }
 
@@ -143,7 +138,7 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-                CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+                CustomerDAO customerDAO = new CustomerDAOImpl();
                 customerDAO.saveCustomer(new CustomerDTO(id, name, address));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to save the customer " + e.getMessage()).show();
@@ -158,7 +153,7 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-                CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+                CustomerDAO customerDAO = new CustomerDAOImpl();
                 customerDAO.updateCustomer(new CustomerDTO(id, name, address));
 
                 CustomerTM selectedCustomer = tblCustomers.getSelectionModel().getSelectedItem();
@@ -176,7 +171,7 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+        CustomerDAO customerDAO = new CustomerDAOImpl();
         return customerDAO.existCustomer(id);
     }
 
@@ -188,7 +183,7 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+            CustomerDAO customerDAO = new CustomerDAOImpl();
             customerDAO.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -204,7 +199,7 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+            CustomerDAO customerDAO = new CustomerDAOImpl();
             return customerDAO.generateNewID();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
