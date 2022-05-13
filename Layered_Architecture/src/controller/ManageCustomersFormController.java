@@ -2,8 +2,8 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dao.CrudDAO;
-import dao.CustomerDAOImpl;
+import dao.custom.CustomerDAO;
+import dao.custom.impl.CustomerDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +32,7 @@ import java.util.List;
  **/
 
 public class ManageCustomersFormController {
-    private final CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
+    private final CustomerDAO customerDAO = new CustomerDAOImpl();
     public AnchorPane root;
     public JFXTextField txtCustomerName;
     public JFXTextField txtCustomerId;
