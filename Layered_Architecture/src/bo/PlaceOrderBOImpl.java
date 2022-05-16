@@ -14,21 +14,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
 public class PlaceOrderBOImpl implements PlaceOrderBO {
-=======
-public class PlaceOrderBOImpl {
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
     private final ItemDAO itemDAO = new ItemDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
     private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
     private final QueryDAO queryDAO = new QueryDAOImpl();
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
         /*Transaction*/
         Connection connection = DBConnection.getDbConnection().getConnection();
@@ -74,58 +67,37 @@ public class PlaceOrderBOImpl {
         return true;
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.search(id);
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.search(code);
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.exist(code);
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.exist(id);
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public String generateNewOrderId() throws SQLException, ClassNotFoundException {
         return orderDAO.generateNewID();
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public ArrayList<CustomerDTO> loadAllCustomers() throws SQLException, ClassNotFoundException {
         return customerDAO.getAll();
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> caca4539cdd90cfbfd074deac32d5277f5ecae75
     public ArrayList<ItemDTO> loadAllItems() throws SQLException, ClassNotFoundException {
         return itemDAO.getAll();
     }

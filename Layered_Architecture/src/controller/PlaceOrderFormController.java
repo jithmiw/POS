@@ -1,5 +1,6 @@
 package controller;
 
+import bo.PlaceOrderBO;
 import bo.PlaceOrderBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -37,13 +38,7 @@ import java.util.stream.Collectors;
  **/
 
 public class PlaceOrderFormController {
-
-    /*private final CustomerDAO customerDAO = new CustomerDAOImpl();
-    private final ItemDAO itemDAO = new ItemDAOImpl();
-    private final OrderDAO orderDAO = new OrderDAOImpl();
-    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
-    private final QueryDAO queryDAO = new QueryDAOImpl();*/
-
+    private final PlaceOrderBO placeOrderBO = new PlaceOrderBOImpl();
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
     public JFXTextField txtCustomerName;
@@ -61,7 +56,6 @@ public class PlaceOrderFormController {
     private String orderId;
 
     public void initialize() throws SQLException, ClassNotFoundException {
-
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
         tblOrderDetails.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
         tblOrderDetails.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("qty"));
@@ -109,8 +103,6 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-
-                        PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
                         CustomerDTO customerDTO = placeOrderBO.searchCustomer(newValue + " ");
                         txtCustomerName.setText(customerDTO.getName());
 
@@ -137,8 +129,6 @@ public class PlaceOrderFormController {
                     if (!existItem(newItemCode + "")) {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
-
-                    PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
                     ItemDTO item = placeOrderBO.searchItem(newItemCode + " ");
 
                     txtDescription.setText(item.getDescription());
@@ -183,18 +173,15 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
         return placeOrderBO.existItem(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
         return placeOrderBO.existCustomer(id);
     }
 
     public String generateNewOrderId() {
         try {
-            PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
             return placeOrderBO.generateNewOrderId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
@@ -206,7 +193,6 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
             ArrayList<CustomerDTO> customers = placeOrderBO.loadAllCustomers();
 
             for (CustomerDTO customer : customers) {
@@ -222,7 +208,6 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
             ArrayList<ItemDTO> items = placeOrderBO.loadAllItems();
 
             for (ItemDTO item : items) {
@@ -321,7 +306,6 @@ public class PlaceOrderFormController {
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
         try {
             return placeOrderBO.placeOrder(orderId, orderDate, customerId, orderDetails);
         } catch (SQLException throwables) {
@@ -334,7 +318,6 @@ public class PlaceOrderFormController {
 
     public ItemDTO findItem(String code) {
         try {
-            PlaceOrderBOImpl placeOrderBO = new PlaceOrderBOImpl();
             return placeOrderBO.searchItem(code);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
