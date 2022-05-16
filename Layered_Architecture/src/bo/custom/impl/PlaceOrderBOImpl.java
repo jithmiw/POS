@@ -1,5 +1,6 @@
-package bo;
+package bo.custom.impl;
 
+import bo.custom.PlaceOrderBO;
 import dao.custom.*;
 import dao.custom.impl.*;
 import db.DBConnection;
@@ -48,8 +49,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
             }
 
 //              Search & Update item
-            //ItemDTO item = findItem(detail.getItemCode());
-            ItemDTO item = null;
+            ItemDTO item = searchItem(detail.getItemCode());
             item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
 //              update item
