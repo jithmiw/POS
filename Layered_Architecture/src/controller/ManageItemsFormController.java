@@ -1,7 +1,7 @@
 package controller;
 
+import bo.BOFactory;
 import bo.custom.ItemBO;
-import bo.custom.impl.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
  **/
 
 public class ManageItemsFormController {
-    private final ItemBO itemBO = new ItemBOImpl();
+    private final ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;

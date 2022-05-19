@@ -3,7 +3,6 @@ package bo.custom.impl;
 import bo.custom.PlaceOrderBO;
 import dao.DAOFactory;
 import dao.custom.*;
-import dao.custom.impl.*;
 import db.DBConnection;
 import model.CustomerDTO;
 import model.ItemDTO;

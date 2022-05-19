@@ -1,6 +1,5 @@
 package dao;
 
-import dao.custom.CustomerDAO;
 import dao.custom.impl.*;
 
 public class DAOFactory {
@@ -9,7 +8,7 @@ public class DAOFactory {
     private DAOFactory() {
     }
 
-    public static DAOFactory getDaoFactory(){
+    public static DAOFactory getDaoFactory() {
         if (daoFactory == null) {
             daoFactory = new DAOFactory();
         }
@@ -20,8 +19,8 @@ public class DAOFactory {
         CUSTOMER, ITEM, ORDER, ORDERDETAILS, QUERYDAO
     }
 
-    public SuperDAO getDAO(DAOTypes types){
-        switch (types){
+    public SuperDAO getDAO(DAOTypes types) {
+        switch (types) {
             case CUSTOMER:
                 return new CustomerDAOImpl();
             case ITEM:
